@@ -1,5 +1,8 @@
 class Portfolio < ApplicationRecord
     has_many :technologies
+    accepts_nested_attributes_for :technologies, 
+                                   reject_if: lambda { |attrs| attrs['name'].blank? }
+
     include Placeholder
     validates_presence_of :title, :body, :main_image, :thumb_image
 
@@ -16,7 +19,3 @@ class Portfolio < ApplicationRecord
         self.thumb_image ||= Placeholder.image_generator(height: '350', width: '200')
     end
 end
-
-# if self.main_image == nisl
-#     self.main_image = "https://place-hold.it/600x400"
-# end
